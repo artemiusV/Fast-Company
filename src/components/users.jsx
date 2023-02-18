@@ -10,7 +10,7 @@ const Users = () => {
   };
 
   const renderPhrase = (number) => {
-    if (number > 4 && number >= 12)
+    if (number > 4 && number < 13)
       return `${number} человек тусанет сегодня с тобой`;
     if (number < 5 && number > 1)
       return `${number} человека тусанет сегодня с тобой`;
