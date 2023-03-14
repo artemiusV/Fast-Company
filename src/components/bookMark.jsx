@@ -7,7 +7,7 @@ const BookMark = (props) => {
   return (
     <button
       onClick={() => changeBookmark(user._id)}
-      className={`btn bi bi-star${user.bookmark ? "-fill" : ""}`}
+      className={`btn bi bi-bookmark-heart${user.bookmark ? "-fill" : ""}`}
     ></button>
   );
 };
