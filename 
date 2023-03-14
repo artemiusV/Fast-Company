@@ -1,0 +1,23 @@
+[33mcommit 8a36229593b70753ba45ecf13753c30df8d8a052[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: artemiusV <artemius.visotski@gmail.com>
+Date:   Tue Mar 14 16:31:28 2023 +0300
+
+    add 2 components qualitie and searchStatus
+
+[33mcommit d97ad2f65e9903acd836c493d81a9285370ddfd1[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: artemiusV <artemius.visotski@gmail.com>
+Date:   Sun Feb 19 00:39:56 2023 +0300
+
+    fixed a bug in const renderPhares
+
+[33mcommit c6ee24124ec561792985c051a459c2c42107042a[m
+Author: artemiusV <artemius.visotski@gmail.com>
+Date:   Sat Feb 18 23:37:21 2023 +0300
+
+    first commit
+
+[33mcommit e3d409c2472dcc40d49c807e9c77681d0beaf661[m
+Author: artemiusV <artemius.visotski@gmail.com>
+Date:   Sat Feb 18 20:08:47 2023 +0300
+
+    Initialize project using Create React App

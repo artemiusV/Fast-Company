@@ -1,5 +1,6 @@
 import React from "react";
 import Qualitie from "./qualitie";
+import BookMark from "./bookMark";
 
 const Users = (props) => {
   const users = props.temp;
@@ -7,7 +8,6 @@ const Users = (props) => {
   const changeBookmark = props.bookmark;
 
   return (
-    // <h1>sss</h1>
     <>
       {users.map((user) => (
         <tr key={user._id}>
@@ -18,7 +18,9 @@ const Users = (props) => {
           <td>{user.profession.name}</td>
           <td>{user.completedMeetings}</td>
           <td>{user.rate}/5</td>
-          <td></td>
+          <td>
+            <BookMark changeBookmark={changeBookmark} user={user} />
+          </td>
           <td>
             <button
               onClick={() => handleDelete(user._id)}
