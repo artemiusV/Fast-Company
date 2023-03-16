@@ -1,15 +1,17 @@
 import React from "react";
 import Qualitie from "./qualitie";
 import BookMark from "./bookMark";
+import PropTypes from "prop-types";
 
 const Users = (props) => {
   const users = props.temp;
+  const usersCrop = props.userCrop;
   const handleDelete = props.delete;
   const changeBookmark = props.bookmark;
 
   return (
     <>
-      {users.map((user) => (
+      {usersCrop.map((user) => (
         <tr key={user._id}>
           <td>{user.name}</td>
           <td>
@@ -33,6 +35,11 @@ const Users = (props) => {
       ))}
     </>
   );
+};
+
+Users.propTypes = {
+  delete: PropTypes.func.isRequired,
+  bookmark: PropTypes.func.isRequired,
 };
 
 export default Users;

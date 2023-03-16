@@ -2,9 +2,23 @@ import React, { useState } from "react";
 import SearchStatus from "./components/searchStatus";
 import Users from "./components/users";
 import api from "./api";
+import Pagination from "./components/pagination";
+import { paginate } from "./api/utils/paginate";
+
+/* eslint-disable indent */
 
 const App = () => {
   const [users, setUsers] = useState(api.users.fetchAll());
+  const count = users.length;
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 4;
+
+  const handlePageChange = (pageIndex) => {
+    console.log("page:", pageIndex);
+    setCurrentPage(pageIndex);
+  };
+
+  const userCrop = paginate(users, currentPage, pageSize);
 
   const handleDelete = (userId) => {
     setUsers(users.filter((user) => user._id !== userId));
@@ -28,7 +42,7 @@ const App = () => {
     <>
       <SearchStatus temp={users} />
 
-      {users.length > 0 && (
+      {count > 0 && (
         <table className="table">
           <thead>
             <tr>
@@ -46,10 +60,17 @@ const App = () => {
               temp={users}
               delete={handleDelete}
               bookmark={changeBookmark}
+              userCrop={userCrop}
             />
           </tbody>
         </table>
       )}
+      <Pagination
+        itemsCount={count}
+        pageSize={pageSize}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
     </>
   );
 };
