@@ -3,8 +3,10 @@ import Qualitie from "./qualitie";
 import BookMark from "./bookMark";
 import PropTypes from "prop-types";
 
+/* eslint-disable indent */
+
 const Users = (props) => {
-  const users = props.temp;
+  // const users = props.temp;
   const usersCrop = props.userCrop;
   const handleDelete = props.delete;
   const changeBookmark = props.bookmark;
@@ -38,6 +40,8 @@ const Users = (props) => {
 };
 
 Users.propTypes = {
+  temp: PropTypes.string.isRequired,
+  userCrop: PropTypes.array.isRequired,
   delete: PropTypes.func.isRequired,
   bookmark: PropTypes.func.isRequired,
 };

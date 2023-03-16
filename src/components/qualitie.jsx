@@ -1,4 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
+
+/* eslint-disable indent */
 
 const Qualitie = (props) => {
   const user = props.temp;
@@ -12,6 +15,10 @@ const Qualitie = (props) => {
       ))}
     </>
   );
+};
+
+Qualitie.propTypes = {
+  temp: PropTypes.string.isRequired,
 };
 
 export default Qualitie;

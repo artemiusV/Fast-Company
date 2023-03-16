@@ -1,13 +1,18 @@
 import React from "react";
+import PropTypes from "prop-types";
+
+/* eslint-disable indent */
 
 const SearchStatus = (props) => {
   const users = props.temp;
 
   const renderPhrase = (number) => {
-    if (number > 4 && number < 13)
+    if (number > 4 && number < 13) {
       return `${number} человек тусанет сегодня с тобой`;
-    if (number < 5 && number > 1)
+    }
+    if (number < 5 && number > 1) {
       return `${number} человека тусанет сегодня с тобой`;
+    }
     if (number === 1) return `${number} человек тусанет сегодня с тобой`;
     return "Никто с тобой не тусанет";
   };
@@ -21,6 +26,10 @@ const SearchStatus = (props) => {
       </span>
     </h2>
   );
+};
+
+SearchStatus.propTypes = {
+  temp: PropTypes.string.isRequired,
 };
 
 export default SearchStatus;
