@@ -1,124 +1,97 @@
-import React from "react";
-import Qualitie from "./qualitie";
-import BookMark from "./bookMark";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { paginate } from "../utils/paginate";
+import Pagination from "./pagination";
+import User from "./user";
+import GroupList from "./groupList";
+import api from "../api";
+import SearchStatus from "./searchStatus";
 
-/* eslint-disable indent */
+const Users = ({ users: allUsers, ...rest }) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [professions, setProfession] = useState();
+  const [selectedProf, setSelectedProf] = useState();
+  const pageSize = 4;
 
-const Users = (props) => {
-  // const users = props.temp;
-  const usersCrop = props.userCrop;
-  const handleDelete = props.delete;
-  const changeBookmark = props.bookmark;
+  useEffect(() => {
+    api.professions.fetchAll().then((data) => setProfession(data));
+  }, []);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedProf]);
+
+  const handlePageChange = (pageIndex) => {
+    setCurrentPage(pageIndex);
+  };
+
+  const handleProfessionSelect = (item) => {
+    setSelectedProf(item);
+  };
+
+  const filteredUsers = selectedProf
+    ? allUsers.filter((user) => user.profession === selectedProf)
+    : allUsers;
+  const count = filteredUsers.length;
+
+  const usersCrop = paginate(filteredUsers, currentPage, pageSize);
+  const clearFilter = () => {
+    setSelectedProf();
+  };
 
   return (
-    <>
-      {usersCrop.map((user) => (
-        <tr key={user._id}>
-          <td>{user.name}</td>
-          <td>
-            <Qualitie temp={user} />
-          </td>
-          <td>{user.profession.name}</td>
-          <td>{user.completedMeetings}</td>
-          <td>{user.rate}/5</td>
-          <td>
-            <BookMark changeBookmark={changeBookmark} user={user} />
-          </td>
-          <td>
-            <button
-              onClick={() => handleDelete(user._id)}
-              className="btn btn-danger"
-            >
-              Delete
-            </button>
-          </td>
-        </tr>
-      ))}
-    </>
+    <div className="d-flex">
+      {professions && (
+        <div className="d-flex flex-column clex-shrink-0 p-3">
+          <GroupList
+            selectedItem={selectedProf}
+            items={professions}
+            onItemSelect={handleProfessionSelect}
+            valueProperty="_id"
+            contentProperty="name"
+          />
+          <button className="btn btn-secondary mt-2" onClick={clearFilter}>
+            Очистить
+          </button>
+        </div>
+      )}
+      <div className="d-flex flex-column">
+        <SearchStatus length={count} />
+
+        {count > 0 && (
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">Имя</th>
+                <th scope="col">Качества</th>
+                <th scope="col">Провфессия</th>
+                <th scope="col">Встретился, раз</th>
+                <th scope="col">Оценка</th>
+                <th scope="col">Избранное</th>
+                <th />
+              </tr>
+            </thead>
+            <tbody>
+              {usersCrop.map((user) => (
+                <User {...rest} {...user} key={user._id} />
+              ))}
+            </tbody>
+          </table>
+        )}
+        <div className="d-flex justify-content-center">
+          <Pagination
+            itemsCount={count}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
+        </div>
+      </div>
+    </div>
   );
 };
-
 Users.propTypes = {
-  temp: PropTypes.string.isRequired,
-  userCrop: PropTypes.array.isRequired,
-  delete: PropTypes.func.isRequired,
-  bookmark: PropTypes.func.isRequired,
+  users: PropTypes.array,
 };
 
 export default Users;
-
-// import React, { useState } from "react";
-// import api from "../api";
-
-// const Users = () => {
-//   const [users, setUsers] = useState(api.users.fetchAll());
-//   //   console.log(api.users.fetchAll());
-//   const handleDelete = (userId) => {
-//     setUsers(users.filter((user) => user._id !== userId));
-//     console.log(userId);
-//   };
-
-//   const renderPhrase = (number) => {
-//     if (number > 4 && number < 13)
-//       return `${number} человек тусанет сегодня с тобой`;
-//     if (number < 5 && number > 1)
-//       return `${number} человека тусанет сегодня с тобой`;
-//     if (number === 1) return `${number} человек тусанет сегодня с тобой`;
-//     return "Никто с тобой не тусанет";
-//   };
-
-//   return (
-//     // <h1>sss</h1>
-//     <>
-//       <h2>
-//         <span
-//           className={"badge " + (users.length > 0 ? "bg-primary" : "bg-danger")}
-//         >
-//           {renderPhrase(users.length)}
-//         </span>
-//       </h2>
-//       {users.length > 0 && (
-//         <table class="table">
-//           <thead>
-//             <tr>
-//               <th scope="col">Имя</th>
-//               <th scope="col">Качества</th>
-//               <th scope="col">Профессия</th>
-//               <th scope="col">Встретился, раз</th>
-//               <th scope="col">Оценка</th>
-//             </tr>
-//             ёё
-//           </thead>
-//           <tbody>
-//             {users.map((user) => (
-//               <tr key={user._id}>
-//                 <td>{user.name}</td>
-//                 <td>
-//                   {user.qualities.map((item) => (
-//                     <span className={"badge m-1 bg-" + item.color}>
-//                       {item.name}
-//                     </span>
-//                   ))}
-//                 </td>
-//                 <td>{user.profession.name}</td>
-//                 <td>{user.completedMeetings}</td>
-//                 <td>{user.rate}/5</td>
-//                 <td>
-//                   <button
-//                     onClick={() => handleDelete(user._id)}
-//                     className="btn btn-danger"
-//                   >
-//                     Delete
-//                   </button>
-//                 </td>
-//               </tr>
-//             ))}
-//           </tbody>
-//         </table>
-//       )}
-//     </>
-//   );
-// };
-
-// export default Users;

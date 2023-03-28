@@ -1,23 +1,17 @@
+/* eslint-disable indent */
+
 import React from "react";
 import PropTypes from "prop-types";
 
-/* eslint-disable indent */
-
-const BookMark = (props) => {
-  const changeBookmark = props.changeBookmark;
-  const user = props.user;
-
+const BookMark = ({ status, ...rest }) => {
   return (
-    <button
-      onClick={() => changeBookmark(user._id)}
-      className={`btn bi bi-bookmark-heart${user.bookmark ? "-fill" : ""}`}
-    ></button>
+    <button {...rest}>
+      <i className={"bi bi-bookmark" + (status ? "-heart-fill" : "")}></i>
+    </button>
   );
 };
-
 BookMark.propTypes = {
-  changeBookmark: PropTypes.func.isRequired,
-  user: PropTypes.string.isRequired,
+  status: PropTypes.bool,
 };
 
 export default BookMark;
