@@ -15,18 +15,17 @@
 // reportWebVitals();
 
 import React from "react";
-import ReactDOM from "react-dom/client";
+import ReactDOM from "react-dom";
 import "./index.css";
-import "bootstrap/dist/css/bootstrap.css";
 import reportWebVitals from "./reportWebVitals";
-import App from "./App";
+import "bootstrap/dist/css/bootstrap.css";
+import App from "./app/App";
 
-/* eslint-disable indent */
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
+ReactDOM.render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>
+  </React.StrictMode>,
+  document.getElementById("root")
 );
+
 reportWebVitals();

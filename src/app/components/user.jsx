@@ -14,11 +14,11 @@ const User = ({
   onToggleBookMark,
 }) => {
   return (
-    <tr>
+    <tr key={_id}>
       <td>{name}</td>
       <td>
         {qualities.map((qual) => (
-          <Quality {...qual} key={qual._id} />
+          <Quality key={qual._id} {...qual} />
         ))}
       </td>
       <td>{profession.name}</td>
