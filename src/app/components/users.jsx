@@ -24,15 +24,15 @@ const Users = () => {
   const handleDelete = (userId) => {
     setUsers(users.filter((user) => user._id !== userId));
   };
+
   const handleToggleBookMark = (id) => {
-    setUsers(
-      users.map((user) => {
-        if (user._id === id) {
-          return { ...user, bookmark: !user.bookmark };
-        }
-        return user;
-      })
-    );
+    const newArray = users.map((user) => {
+      if (user._id === id) {
+        return { ...user, bookmark: !user.bookmark };
+      }
+      return user;
+    });
+    setUsers(newArray);
   };
 
   useEffect(() => {
@@ -55,6 +55,21 @@ const Users = () => {
     setSortBy(item);
   };
 
+  useEffect(() => {
+    if (users) {
+      const filteredUsers = selectedProf
+        ? users.filter(
+            (user) =>
+              JSON.stringify(user.profession) === JSON.stringify(selectedProf)
+          )
+        : users;
+      const usersCrop = paginate(filteredUsers, currentPage, pageSize);
+      if (usersCrop.length === 0 && currentPage > 1) {
+        setCurrentPage(currentPage - 1);
+      }
+    }
+  }, [users]);
+
   if (users) {
     const filteredUsers = selectedProf
       ? users.filter(
@@ -65,7 +80,6 @@ const Users = () => {
 
     const count = filteredUsers.length;
     const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order]);
-
     const usersCrop = paginate(sortedUsers, currentPage, pageSize);
     const clearFilter = () => {
       setSelectedProf();
@@ -79,10 +93,9 @@ const Users = () => {
               selectedItem={selectedProf}
               items={professions}
               onItemSelect={handleProfessionSelect}
-              valueProperty="_id"
-              contentProperty="name"
             />
             <button className="btn btn-secondary mt-2" onClick={clearFilter}>
+              {" "}
               Очистить
             </button>
           </div>
