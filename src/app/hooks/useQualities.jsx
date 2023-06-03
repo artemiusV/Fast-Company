@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import PropTypes from "prop-types";
-// import qualityService from "../services/quality.service";
 import qualityService from "../services/quality.service";
+// import qualityService
 
 const QualitiesContext = React.createContext();
 
@@ -19,6 +19,7 @@ export const QualitiesProvider = ({ children }) => {
     const getQualities = async () => {
       try {
         const { content } = await qualityService.fetchAll();
+        console.log("sdsdsd", content);
         setQualities(content);
         setLoading(false);
       } catch (error) {
@@ -29,6 +30,8 @@ export const QualitiesProvider = ({ children }) => {
   }, []);
 
   const getQuality = (id) => {
+    const qq = qualities.find((q) => q._id === id);
+    console.log(qq);
     return qualities.find((q) => q._id === id);
   };
 
