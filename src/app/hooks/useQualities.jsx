@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import PropTypes from "prop-types";
+
 import qualityService from "../services/quality.service";
 // import qualityService
 
@@ -20,6 +21,7 @@ export const QualitiesProvider = ({ children }) => {
       try {
         const { content } = await qualityService.fetchAll();
         console.log("sdsdsd", content);
+
         setQualities(content);
         setLoading(false);
       } catch (error) {

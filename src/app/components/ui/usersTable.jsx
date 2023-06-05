@@ -23,7 +23,9 @@ const UserTable = ({
     },
     qualities: {
       name: "Качество",
-      component: (user) => <Qualities qualities={user.qualities} />,
+      component: (user) => {
+        return <Qualities qualities={user.qualities} />;
+      },
     },
     professions: {
       name: "Профессия",
